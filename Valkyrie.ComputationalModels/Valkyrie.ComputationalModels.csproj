@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{90510AFF-4034-4545-82B1-EF2868923BD1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Valkyrie.ComputationalModels</RootNamespace>
+    <AssemblyName>Valkyrie.ComputationalModels</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CalculatorRealisations\StaticGGACalculator\StaticGGAAirCoolingUnit.cs" />
+    <Compile Include="CalculatorRealisations\StaticGGACalculator\StaticGGABridge.cs" />
+    <Compile Include="CalculatorRealisations\StaticGGACalculator\StaticGGADustCleaner.cs" />
+    <Compile Include="CalculatorRealisations\StaticGGACalculator\StaticGGAGasCompressorUnit.cs" />
+    <Compile Include="CalculatorRealisations\StaticGGACalculator\StaticGGALossObject.cs" />
+    <Compile Include="CalculatorRealisations\StaticGGACalculator\StaticGGAPipeline.cs" />
+    <Compile Include="CalculatorRealisations\StaticGGACalculator\StaticGGAValve.cs" />
+    <Compile Include="Enums\NSPInputBoundariesEnum.cs" />
+    <Compile Include="Enums\NSPOutputBoundariesEnum.cs" />
+    <Compile Include="Enums\NSPStaticBoundariesEnum.cs" />
+    <Compile Include="Enums\ValveStates.cs" />
+    <Compile Include="FlowProperties.cs" />
+    <Compile Include="Models\BridgeModel.cs" />
+    <Compile Include="Models\GasCompressorUnitModel.cs" />
+    <Compile Include="Models\LocalResistanceModel.cs" />
+    <Compile Include="Enums\GasCompressorUnitResultEnum.cs" />
+    <Compile Include="Models\PipelineModel.cs" />
+    <Compile Include="Models\ValveModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Valkirie.Sigryun\Valkyrie.Sigryun.csproj">
+      <Project>{af27b78f-65b6-4cc8-a524-890c6024c02f}</Project>
+      <Name>Valkyrie.Sigryun</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Valkyrie.HierarchicalModel\Valkyrie.HierarchicalModel.csproj">
+      <Project>{6735b99a-e1bd-47f7-8013-15bf5b3e7dc8}</Project>
+      <Name>Valkyrie.HierarchicalModel</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Valkyrie.MathLibrary\Valkyrie.MathLibrary.csproj">
+      <Project>{f60cd99c-8e4e-4ec0-b327-6994a09b93bf}</Project>
+      <Name>Valkyrie.MathLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>echo Копирование откомпилированного плагина $(ProjectName)
+xcopy /Y /E "$(ProjectDir)bin\$(PlatformName)\$(ConfigurationName)" "$(SolutionDir).bin\$(PlatformName)\$(ConfigurationName)\InternalLibs\"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
