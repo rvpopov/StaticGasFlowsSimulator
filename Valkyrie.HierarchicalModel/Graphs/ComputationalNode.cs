@@ -1,4 +1,4 @@
-﻿using Valkyrie.Sigryun;
+﻿using Valkyrie.Sigryun.Interfaces;
 
 namespace Valkyrie.HierarchicalModel.Graphs
 {

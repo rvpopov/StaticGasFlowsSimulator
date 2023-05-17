@@ -1,4 +1,5 @@
 ﻿using System;
+using Valkyrie.Sigryun.Interfaces;
 
 namespace Valkyrie.Sigryun.Graphs
 {

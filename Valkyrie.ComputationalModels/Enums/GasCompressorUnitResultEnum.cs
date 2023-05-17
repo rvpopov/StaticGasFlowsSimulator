@@ -1,4 +1,4 @@
-﻿namespace Valkyrie.Sigryun.Models.KompressorShopModels
+﻿namespace Valkyrie.ComputationalModels.Enums
 {
     public enum GasCompressorUnitResultEnum
     {

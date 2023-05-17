@@ -3,6 +3,7 @@ using Valkyrie.ComputationalModels.Models;
 using Valkyrie.Sigryun;
 using Valkyrie.Sigryun.Calculators.StaticGGA;
 using Valkyrie.Sigryun.Calculators.TermalCalculator;
+using Valkyrie.Sigryun.Interfaces;
 
 namespace Valkyrie.ComputationalModels.CalculatorRealisations.StaticGGACalculator
 {
@@ -280,7 +281,7 @@ namespace Valkyrie.ComputationalModels.CalculatorRealisations.StaticGGACalculato
         /// Вызывает копирование объекта
         /// </summary>
         /// <returns></returns>
-        public new Sigryun.IComputationalModel Clone()
+        public new IComputationalModel Clone()
         {
             throw new NotImplementedException();
         }

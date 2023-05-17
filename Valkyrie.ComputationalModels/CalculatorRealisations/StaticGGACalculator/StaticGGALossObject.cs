@@ -1,6 +1,7 @@
 ﻿using System;
 using Valkyrie.Sigryun.Calculators.StaticGGA;
 using Valkyrie.Sigryun.Calculators.TermalCalculator;
+using Valkyrie.Sigryun.Interfaces;
 
 namespace Valkyrie.ComputationalModels.CalculatorRealisations.StaticGGACalculator
 {
@@ -92,7 +93,7 @@ namespace Valkyrie.ComputationalModels.CalculatorRealisations.StaticGGACalculato
             return 0;
         }
 
-        public Sigryun.IComputationalModel Clone()
+        public IComputationalModel Clone()
         {
             throw new NotImplementedException();
         }

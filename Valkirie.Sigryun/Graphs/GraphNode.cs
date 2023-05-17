@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Valkyrie.Sigryun.Enums;
+using Valkyrie.Sigryun.Interfaces;
 
 namespace Valkyrie.Sigryun.Graphs
 {

@@ -1,5 +1,5 @@
-﻿using Valkyrie.Sigryun;
-using Valkyrie.Sigryun.Enums;
+﻿using Valkyrie.Sigryun.Enums;
+using Valkyrie.Sigryun.Interfaces;
 
 namespace Valkyrie.HierarchicalModel.Models
 {

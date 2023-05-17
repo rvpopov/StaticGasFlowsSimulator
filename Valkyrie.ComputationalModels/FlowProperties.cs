@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Valkyrie.Sigryun
+namespace Valkyrie.ComputationalModels
 {
     public class FlowProperties : ICloneable
     {
@@ -107,7 +107,7 @@ namespace Valkyrie.Sigryun
         public double GetR()
         {
             double delta = GetDelta();
-            double zs = 1 - Math.Pow((0.0741 * Ro - 0.006), 2);
+            double zs = 1 - Math.Pow(0.0741 * Ro - 0.006, 2);
             double R = 101.325 / (Ro * 293.15 * zs);
             double rr = 0.287 / delta;
             return R;

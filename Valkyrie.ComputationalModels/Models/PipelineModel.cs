@@ -1,5 +1,4 @@
 ﻿using System;
-using Valkyrie.Sigryun;
 
 namespace Valkyrie.ComputationalModels.Models
 {

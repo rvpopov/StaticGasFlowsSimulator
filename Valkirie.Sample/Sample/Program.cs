@@ -1,4 +1,5 @@
 ﻿using System;
+using Valkyrie.ComputationalModels;
 using Valkyrie.ComputationalModels.CalculatorRealisations.StaticGGACalculator;
 using Valkyrie.ComputationalModels.Models;
 using Valkyrie.ComputationalTasks.StaticRegime;

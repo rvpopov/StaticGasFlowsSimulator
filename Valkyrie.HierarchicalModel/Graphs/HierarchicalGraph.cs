@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Valkyrie.HierarchicalModel.Interfaces;
 using Valkyrie.HierarchicalModel.Models;
-using Valkyrie.Sigryun;
 using Valkyrie.Sigryun.Graphs;
+using Valkyrie.Sigryun.Interfaces;
 
 namespace Valkyrie.HierarchicalModel.Graphs
 {

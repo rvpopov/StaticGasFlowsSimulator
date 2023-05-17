@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Valkyrie.Sigryun
+namespace Valkyrie.Sigryun.Interfaces
 {
     public interface IFlowProperties : ICloneable
     {

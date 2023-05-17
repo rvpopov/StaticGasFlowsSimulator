@@ -1,88 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <TargetFramework>net7.0</TargetFramework>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1C27FD45-D9DF-4D06-9F20-1CDE38260F75}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sample</RootNamespace>
-    <AssemblyName>Sample</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
-    <FileAlignment>512</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <PlatformTarget>x64</PlatformTarget>
     <OutputPath>bin\x64\Debug\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <PlatformTarget>x64</PlatformTarget>
     <OutputPath>bin\x64\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
+    <ProjectReference Include="..\..\Valkirie.Sigryun\Valkyrie.Sigryun.csproj" />
+    <ProjectReference Include="..\..\Valkyrie.ComputationalModels\Valkyrie.ComputationalModels.csproj" />
+    <ProjectReference Include="..\..\Valkyrie.ComputationalTasks\Valkyrie.ComputationalTasks.csproj" />
+    <ProjectReference Include="..\..\Valkyrie.HierarchicalModel\Valkyrie.HierarchicalModel.csproj" />
+    <ProjectReference Include="..\..\Valkyrie.MathLibrary\Valkyrie.MathLibrary.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.4.421302">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Valkirie.Sigryun\Valkyrie.Sigryun.csproj">
-      <Project>{ec431e98-7a99-42e7-a855-a23f3aa6f3ca}</Project>
-      <Name>Valkyrie.Sigryun</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Valkyrie.ComputationalModels\Valkyrie.ComputationalModels.csproj">
-      <Project>{90510aff-4034-4545-82b1-ef2868923bd1}</Project>
-      <Name>Valkyrie.ComputationalModels</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Valkyrie.ComputationalTasks\Valkyrie.ComputationalTasks.csproj">
-      <Project>{82937506-e1d8-4d79-8a75-cbce3b1d35ec}</Project>
-      <Name>Valkyrie.ComputationalTasks</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Valkyrie.HierarchicalModel\Valkyrie.HierarchicalModel.csproj">
-      <Project>{6735B99A-E1BD-47F7-8013-15BF5B3E7DC8}</Project>
-      <Name>Valkyrie.HierarchicalModel</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Valkyrie.MathLibrary\Valkyrie.MathLibrary.csproj">
-      <Project>{f60cd99c-8e4e-4ec0-b327-6994a09b93bf}</Project>
-      <Name>Valkyrie.MathLibrary</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

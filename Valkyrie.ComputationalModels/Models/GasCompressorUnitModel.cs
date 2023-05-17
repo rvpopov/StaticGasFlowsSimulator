@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Valkyrie.ComputationalModels.Enums;
 using Valkyrie.MathLibrary;
-using Valkyrie.Sigryun;
-using Valkyrie.Sigryun.Models.KompressorShopModels;
 
 namespace Valkyrie.ComputationalModels.Models
 {

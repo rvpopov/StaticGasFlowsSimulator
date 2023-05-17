@@ -1,5 +1,4 @@
-﻿
-namespace Valkyrie.Sigryun
+﻿namespace Valkyrie.Sigryun.Interfaces
 {
     /// <summary>
     /// Представляет интерфейс модели технологического объекта
