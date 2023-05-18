@@ -6,17 +6,11 @@ namespace Valkyrie.ComputationalModels.Models
     {
         #region Перечисления
 
-        public enum ZMethods
-        {
-            Constant,
-            Normative2005
-        }
-
         public enum LambdaMethods
         {
             Constant,
             Turbulent,
-            Normative2005
+            NTPMG2006
         }
 
         #endregion
@@ -35,10 +29,10 @@ namespace Valkyrie.ComputationalModels.Models
         /// </summary>
         public PipelineModel()
         {
-            FlowProps = new FlowProperties(0.687);
+            FlowProps = new FlowProperties(0.687, 0, 0);
             TAvg = 275.15;
-            ZMethod = ZMethods.Normative2005;
-            LambdaMethod = LambdaMethods.Normative2005;
+            ZMethod = FlowProperties.ZMethods.NTPMG2006;
+            LambdaMethod = LambdaMethods.NTPMG2006;
         }
 
         #endregion
@@ -172,7 +166,7 @@ namespace Valkyrie.ComputationalModels.Models
         /// <summary>
         /// Получает или задает метод вычисления коэффициента сжимаемости газа
         /// </summary>
-        public ZMethods ZMethod
+        public FlowProperties.ZMethods ZMethod
         {
             get;
             set;
@@ -292,7 +286,7 @@ namespace Valkyrie.ComputationalModels.Models
             PAvg = GetPavg(pin, pout);
             //вычисляем свойства газового потока
             //Коэффициент сжимаемости газа
-            double z = FlowProps.GetZ(PAvg, TAvg);
+            double z = FlowProps.GetZ(PAvg, TAvg, ZMethod);
             //Относительная плотность газа
             double delta = FlowProps.GetDelta();
             //Задается начальный коэффициент гидравлического сопротивления
@@ -335,7 +329,7 @@ namespace Valkyrie.ComputationalModels.Models
             if (pout < 0)
                 pout = 1;
             PAvg = GetPavg(pin, pout);
-            double z = FlowProps.GetZ(PAvg, TAvg);
+            double z = FlowProps.GetZ(PAvg, TAvg, ZMethod);
             double delta = FlowProps.GetDelta();
             double cp = FlowProps.GetCp(PAvg, TAvg, delta);
             double alpha = 225.5 * HeatTransfer * Dout / (qin * delta * cp * Math.Pow(10, 6));
@@ -364,7 +358,7 @@ namespace Valkyrie.ComputationalModels.Models
 
         protected void CalculateSpeeds(double pin, double pout, double qin)
         {
-            double z = FlowProps.GetZ(PAvg, TAvg);
+            double z = FlowProps.GetZ(PAvg, TAvg, ZMethod);
             //Parent.VBegin = 1.223 * 41.6666 * Math.Abs(qin) * TAvg * z / (Math.Abs(pin) * Din * Din / 100);
             //Parent.VEnd = 1.223 * 41.6666 * Math.Abs(qin) * TAvg * z / (Math.Abs(pout) * Din * Din / 100);
         }
@@ -446,13 +440,11 @@ namespace Valkyrie.ComputationalModels.Models
             double lambda = _lambdaConstant;
             if (LambdaMethod == LambdaMethods.Turbulent)
                 lambda = 0.067 * Math.Pow(2 * Roughness / Din, 0.2) / (HydraulicEffeciency * HydraulicEffeciency);
-            if (LambdaMethod == LambdaMethods.Normative2005)
+            if (LambdaMethod == LambdaMethods.NTPMG2006)
                 lambda = GetLambda(Math.Abs(q), pavg, tavg, Din, FlowProps.GetDelta());
 
             //Вычисление коэффициента сжимаемости газа
-            double z = _zConstant;
-            if (ZMethod == ZMethods.Normative2005)
-                z = FlowProps.GetZ(pavg, tavg);
+            double z = FlowProps.GetZ(pavg, tavg, ZMethod);
 
             double res = 9.0417 * Math.Pow(10, 10) * lambda * z * tavg * delta * Length / Math.Pow(Din, 5);
 
@@ -468,9 +460,7 @@ namespace Valkyrie.ComputationalModels.Models
             double pavg = GetPavg(pin, pout);
 
             //Вычисление коэффициента сжимаемости газа
-            double z = _zConstant;
-            if (ZMethod == ZMethods.Normative2005)
-                z = FlowProps.GetZ(pavg, tavg);
+            double z = FlowProps.GetZ(pavg, tavg, ZMethod);
 
             double B = 5.096 * z * tavg / (Math.Pow(Din, 2) * Length);
             return B;

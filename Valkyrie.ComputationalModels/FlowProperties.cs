@@ -4,9 +4,20 @@ namespace Valkyrie.ComputationalModels
 {
     public class FlowProperties : ICloneable
     {
-        public FlowProperties(double ro)
+        #region Перечисления
+
+        public enum ZMethods
+        {
+            Constant,
+            NTPMG2006,
+            GOST30139_3_2015
+        }
+        #endregion
+        public FlowProperties(double ro, double xa, double xy)
         {
             Ro = ro;
+            Xa = xa;
+            Xy = xy;
             CalculatePsevdoCriticalValues();
         }
 
@@ -23,11 +34,29 @@ namespace Valkyrie.ComputationalModels
             get;
             private set;
         }
-
+        /// <summary>
+        /// Плотность газа
+        /// </summary>
         public double Ro
         {
             get;
             set;
+        }
+        /// <summary>
+        /// Доля Азота
+        /// </summary>
+        public double Xa
+        {
+            get;
+            private set;
+        }
+        /// <summary>
+        /// Доля Углерода
+        /// </summary>
+        public double Xy
+        {
+            get;
+            private set;
         }
 
         /// <summary>
@@ -62,7 +91,20 @@ namespace Valkyrie.ComputationalModels
         /// <param name="P">Давление газа</param>
         /// <param name="T">Температура</param>
         /// <returns>Коэффициент сжимаемости</returns>
-        public double GetZ(double P, double T)
+        public double GetZ(double P, double T, ZMethods zMethods)
+        {
+            switch(zMethods)
+            {
+                    case ZMethods.Constant:
+                        return 0.87;
+                    case ZMethods.NTPMG2006:
+                        return GetZNTPMG2006(P, T);
+                    case ZMethods.GOST30139_3_2015:
+                        return GetZGOST30139_3_2015(P, T);
+            };
+            return 0.87; //Константа, если неверный параметр
+        }
+        private double GetZNTPMG2006(double P, double T)
         {
             double Ppr = P / Ppk;
             double Tpr = T / Tpk;
@@ -72,12 +114,28 @@ namespace Valkyrie.ComputationalModels
             return Z;
         }
 
-        /// <summary>
-        /// Функция возвращает относительную плотность по воздуху
-        /// </summary>
-        /// <param name="Z">Коэффициент сжимаемости газа</param>
-        /// <returns></returns>
-        public double GetDelta()
+        private double GetZGOST30139_3_2015(double P, double T)
+        {
+
+            throw new NotImplementedException();
+        }
+
+            /// <summary>
+            /// Расчёт коэф. сжимаемости при С.У. по ГОСТ 30319ю2-2015 по неполному комп. составу
+            /// </summary>
+            /// <returns></returns>
+            public double GetZCNotFull()
+        {
+            double _tmp = (0.0741 * Ro - 0.006 - 0.0063 * Xa - 0.0575 * Xy);
+            return 1 - _tmp * _tmp;
+        }
+
+            /// <summary>
+            /// Функция возвращает относительную плотность по воздуху
+            /// </summary>
+            /// <param name="Z">Коэффициент сжимаемости газа</param>
+            /// <returns></returns>
+            public double GetDelta()
         {
             double Rov = 1.20445; //Плотность воздуха
             double delta = Ro / Rov;
@@ -90,9 +148,7 @@ namespace Valkyrie.ComputationalModels
         /// <returns>Значение универсальной газовой постоянно</returns>
         public double GetR(double delta)
         {
-            //double zs = 1 - Math.Pow((0.0741 * Ro - 0.006), 2);
-            ////double zs = 1 - Math.Pow((0.0458 * Ro - 0.0022), 2);
-            //double R = 101.325 / (Ro * 293.15 * zs);
+            return 101325 / (Ro * 293.15 * GetZCNotFull());
             double rr = 0.28689 / delta;
             return rr;
 
@@ -132,7 +188,13 @@ namespace Valkyrie.ComputationalModels
             double mu = mu0 * (1 + B1 * Ppr + B2 * Math.Pow(Ppr, 2) + B3 * Math.Pow(Ppr, 3));
             return mu;
         }
-
+        /// <summary>
+        /// Функция расчёта изобарной теплоёмкости газа по НТП МГ 2006
+        /// </summary>
+        /// <param name="P">Давление, Па</param>
+        /// <param name="T">Температура, К</param>
+        /// <param name="delta"></param>
+        /// <returns></returns>
         public double GetCp(double P, double T, double delta)
         {
             double Ppr = P / Ppk;
@@ -156,7 +218,12 @@ namespace Valkyrie.ComputationalModels
 
             return R * (E0 + E1 * Ppr + E2 * Ppr * Ppr + E3 * Ppr * Ppr * Ppr);
         }
-
+        /// <summary>
+        /// Функция определения коэф. Джоуля - Томсона НТП МГ -2006
+        /// </summary>
+        /// <param name="P">Давление, Па</param>
+        /// <param name="T">Температура, К</param>
+        /// <returns></returns>
         public double GetDi(double P, double T)
         {
             double Ppr = P / Ppk;
@@ -191,7 +258,7 @@ namespace Valkyrie.ComputationalModels
         /// <returns></returns>
         public object Clone()
         {
-            FlowProperties res = new FlowProperties(Ro);
+            FlowProperties res = new FlowProperties(Ro,Xa,Xy);
             return res;
         }
 
@@ -200,15 +267,15 @@ namespace Valkyrie.ComputationalModels
         #region Приватные методы
 
         /// <summary>
-        /// Функция вычисляет псевдокритические параметры газа по формуле ГОСТ
+        /// Функция вычисляет псевдокритические параметры газа по формуле ГОСТ 30319.2-2015 для неполного компонентного состава газа
         /// </summary>
         private void CalculatePsevdoCriticalValues()
         {
-            double xy = 0.0;
-            double xa = 0.0;
+            //double xy = 0.0;
+            //double xa = 0.0;
 
-            Ppk = 2.9585 * (1.608 - 0.05994 * Ro + xy - 0.392 * xa);
-            Tpk = 88.25 * (0.9915 + 1.759 * Ro - xy - 1.681 * xa);
+            Ppk = 2.9585 * (1.608 - 0.05994 * Ro + Xy - 0.392 * Xa);
+            Tpk = 88.25 * (0.9915 + 1.759 * Ro - Xy - 1.681 * Xa);
         }
 
         #endregion

@@ -14,7 +14,7 @@ namespace Valkyrie.ComputationalModels.Models
         /// </summary>
         public LocalResistanceModel()
         {
-            FlowProps = new FlowProperties(0.687);
+            FlowProps = new FlowProperties(0.687, 0, 0);
         }
 
         #endregion

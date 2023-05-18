@@ -23,7 +23,7 @@ namespace Valkyrie.ComputationalModels.Models
         {
             KPDKoefficients = new List<double>();
             PowerKoefficients = new List<double>();
-            FlowProps = new FlowProperties(0.687);
+            FlowProps = new FlowProperties(0.687, 0, 0);
 
             CoefficientAdaptationEfficiency = 0.95;
             CoefficientAdaptationPower = 0.95;
@@ -33,11 +33,23 @@ namespace Valkyrie.ComputationalModels.Models
             PenaltyCoeffQmax = 10e5;
             PenaltyCoeffQmin = 10e9;
             PenaltyCoeffRevolves = 10e6;
+
+            //По-умолчанию НТП МГ 2006
+            ZMethod = FlowProperties.ZMethods.NTPMG2006; 
         }
 
         #endregion
 
         #region Свойства
+
+        /// <summary>
+        /// Получает или задает метод вычисления коэффициента сжимаемости газа
+        /// </summary>
+        public FlowProperties.ZMethods ZMethod
+        {
+            get;
+            set;
+        }
 
         #region Номинальные параметры
 
@@ -346,8 +358,8 @@ namespace Valkyrie.ComputationalModels.Models
             double n_otn = N / NominalRevs; //Относительные обороты
 
             //Расчитываем приведенный расход
-            double z = FlowProps.GetZ(Pin, Tin);
-            double zs = FlowProps.GetZ(FlowProps.PStandart, FlowProps.TStandart);
+            double z = FlowProps.GetZ(Pin, Tin, ZMethod);
+            double zs = FlowProps.GetZ(FlowProps.PStandart, FlowProps.TStandart, ZMethod);
             double ros = FlowProps.Ro;//GetStandartRo(M, zs);
             double ro = ros * FlowProps.TStandart * Pin / (Tin * FlowProps.PStandart * z);
             double q_pri = 694.444 * Qin * ros / (ro * n_otn);
@@ -442,8 +454,8 @@ namespace Valkyrie.ComputationalModels.Models
             //Приводим к нужным величинам оперативные параметры
             double n_otn = N / NominalRevs; //Относительные обороты
             //Расчитываем приведенный расход
-            double z = FlowProps.GetZ(pin, tin);
-            double zs = FlowProps.GetZ(FlowProps.PStandart, FlowProps.TStandart);
+            double z = FlowProps.GetZ(pin, tin, ZMethod);
+            double zs = FlowProps.GetZ(FlowProps.PStandart, FlowProps.TStandart, ZMethod);
             double ros = FlowProps.Ro;//GetStandartRo(M, zs);
             double ro = ros * FlowProps.TStandart * pin / (tin * FlowProps.PStandart * z);
             qmin = 1.100000001 * QReducedMin * ro * n_otn / (694.444 * ros);
@@ -487,8 +499,8 @@ namespace Valkyrie.ComputationalModels.Models
             //Приводим к нужным величинам оперативные параметры
             double n_otn = N / NominalRevs; //Относительные обороты
             //Расчитываем приведенный расход
-            double z = FlowProps.GetZ(pin, tin);
-            double zs = FlowProps.GetZ(FlowProps.PStandart, FlowProps.TStandart);
+            double z = FlowProps.GetZ(pin, tin, ZMethod);
+            double zs = FlowProps.GetZ(FlowProps.PStandart, FlowProps.TStandart, ZMethod);
             double ros = FlowProps.Ro;//GetStandartRo(M, zs);
             double ro = ros * FlowProps.TStandart * pin / (tin * FlowProps.PStandart * z);
             qmin = QReducedMin * ro * n_otn / (694.444 * ros);
@@ -541,7 +553,7 @@ namespace Valkyrie.ComputationalModels.Models
             SecantMethod secantMethod = new SecantMethod();
             var hasRoot = secantMethod.Solve(new Func<double, double>(x =>
             {
-                double zout = FlowProps.GetZ(pout, x);
+                double zout = FlowProps.GetZ(pout, x, ZMethod);
                 return x - tin * z / zout * Math.Pow(eps, (m - 1) / m);
             }), a, b, 0.0001, 1000, out tout);
 

@@ -34,14 +34,14 @@ namespace Sample
                 Din = 1387,
                 Dout = 1420,
                 EnvironmentTemperature = SConverter.CToK(5),
-                FlowProps = new FlowProperties(0.687),
+                FlowProps = new FlowProperties(0.687,0,0),
                 HeatTransfer = 1.3,
                 HydraulicEffeciency = 0.95,
-                LambdaMethod = PipelineModel.LambdaMethods.Normative2005,
+                LambdaMethod = PipelineModel.LambdaMethods.NTPMG2006,
                 Length = 120,
                 PMax = SConverter.AtaToMPa(75),
                 Roughness = 0.03,
-                ZMethod = PipelineModel.ZMethods.Normative2005
+                ZMethod = FlowProperties.ZMethods.NTPMG2006
             };
 
             var pipeline2 = new StaticGGAPipeline()
@@ -49,14 +49,14 @@ namespace Sample
                 Din = 1387,
                 Dout = 1420,
                 EnvironmentTemperature = SConverter.CToK(5),
-                FlowProps = new FlowProperties(0.687),
+                FlowProps = new FlowProperties(0.687, 0, 0),
                 HeatTransfer = 1.3,
                 HydraulicEffeciency = 0.95,
-                LambdaMethod = PipelineModel.LambdaMethods.Normative2005,
+                LambdaMethod = PipelineModel.LambdaMethods.NTPMG2006,
                 Length = 130,
                 PMax = SConverter.AtaToMPa(75),
                 Roughness = 0.03,
-                ZMethod = PipelineModel.ZMethods.Normative2005
+                ZMethod = FlowProperties.ZMethods.NTPMG2006
             };
 
             var pipeline3 = new StaticGGAPipeline()
@@ -64,14 +64,14 @@ namespace Sample
                 Din = 1387,
                 Dout = 1420,
                 EnvironmentTemperature = SConverter.CToK(5),
-                FlowProps = new FlowProperties(0.687),
+                FlowProps = new FlowProperties(0.687, 0, 0),
                 HeatTransfer = 1.3,
                 HydraulicEffeciency = 0.95,
-                LambdaMethod = PipelineModel.LambdaMethods.Normative2005,
+                LambdaMethod = PipelineModel.LambdaMethods.NTPMG2006,
                 Length = 130,
                 PMax = SConverter.AtaToMPa(75),
                 Roughness = 0.03,
-                ZMethod = PipelineModel.ZMethods.Normative2005
+                ZMethod = FlowProperties.ZMethods.NTPMG2006
             };
 
             //Формируем граф:
